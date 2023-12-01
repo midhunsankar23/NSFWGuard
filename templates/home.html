@@ -55,7 +55,7 @@
     <!-- Dark navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container d-flex justify-content-center">
-            <a class="navbar-brand" href="/">NSFW Detector</a>
+            <a class="navbar-brand" href="/">Nudity Detection App</a>
         </div>
     </nav>
 
@@ -66,8 +66,7 @@
                 <!-- Image upload -->
                 <div class="card p-3">
                     <h2 class="card-title">Upload an image</h2>
-                    <form id="upload-form" action="/predict" method="post" enctype="multipart/form-data"
-                        onsubmit="sendImageToPredict(); return false;">
+                    <form id="upload-form" action="/predict" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <input type="file" class="form-control-file" name="file" id="imgInp" accept="image/*">
                             <img id="imgUpload" src="#" />
@@ -89,18 +88,40 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
-        function sendImageToPredict() {
-            // Get the form element and create a FormData object
-            var formElement = document.getElementById('upload-form');
-            var formData = new FormData(formElement);
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                // Reset the output field content
+                $('#output').html("");
 
-            // Log FormData for debugging (optional)
-            console.log("FormData:", formData);
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgUpload').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+
+        $("#imgInp").change(function () {
+            readURL(this);
+        });
+
+        $("#upload-form").on("submit", function (e) {
+            e.preventDefault();
+
+            // Log to the console to check if the form submission event is triggered
+            console.log("Form submission event triggered");
+
+            var form_data = new FormData(this);
+
+            // Log to the console to check the form data
+            console.log("Form data:", form_data);
 
             // Fetch options
             var options = {
                 method: 'POST',
-                body: formData,
+                body: form_data,
             };
 
             // Send the image data to the '/predict' endpoint
@@ -127,46 +148,8 @@
                     var outputElement = document.getElementById('output');
                     outputElement.innerHTML = "An error occurred";
                 });
-        }
-
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#imgUpload').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]); // convert to base64 string
-            }
-        }
-
-        $("#imgInp").change(function () {
-            readURL(this);
         });
     </script>
 </body>
 
 </html>
-
-
-<!-- all_labels = [
-    "FEMALE_GENITALIA_COVERED",
-    "FACE_FEMALE",
-    "BUTTOCKS_EXPOSED",
-    "FEMALE_BREAST_EXPOSED",
-    "FEMALE_GENITALIA_EXPOSED",
-    "MALE_BREAST_EXPOSED",
-    "ANUS_EXPOSED",
-    "FEET_EXPOSED",
-    "BELLY_COVERED",
-    "FEET_COVERED",
-    "ARMPITS_COVERED",
-    "ARMPITS_EXPOSED",
-    "FACE_MALE",
-    "BELLY_EXPOSED",
-    "MALE_GENITALIA_EXPOSED",
-    "ANUS_COVERED",
-    "FEMALE_BREAST_COVERED",
-    "BUTTOCKS_COVERED",
-] -->
