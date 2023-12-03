@@ -15,3 +15,18 @@ NSFWGuard stands at the forefront of advanced content moderation, ensuring a sec
 4. **User Privacy:** Prioritize user privacy with on-device processing options, minimizing data storage, and adhering to responsible data handling practices.
 
 5. **API Integration:** Easily integrate NSFWGuard into your infrastructure using user-friendly APIs, facilitating seamless implementation. Trust NSFWGuard for a responsible and effective approach to content moderation in the digital realm.
+
+## Usage
+
+### Prerequisites
+
+Ensure you have Python and Flask installed on your machine.
+
+### Running the Flask App
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/NSFWGuard.git
+   cd NSFWGuard
+   python3 app.py
