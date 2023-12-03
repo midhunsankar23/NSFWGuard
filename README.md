@@ -27,6 +27,6 @@ Ensure you have Python and Flask installed on your machine.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/NSFWGuard.git
+   git clone https://github.com/midhunsankar23/NSFWGuard.git
    cd NSFWGuard
    python3 app.py
